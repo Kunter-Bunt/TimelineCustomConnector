@@ -1,5 +1,6 @@
 import { IRecord } from "./types/Record";
 import { IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
+import { IconOption } from "./types/Enums";
 
 export class MyRecordSource implements IRecordSource {
     private context: any;
@@ -20,12 +21,15 @@ export class MyRecordSource implements IRecordSource {
         };
     };
 
-    async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest | undefined): Promise<IRecordsDataResponse> 
-    {
-        this.records =  this.records ?? []; // insert getting data here
+    async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest | undefined): Promise<IRecordsDataResponse> {
+        this.records = this.records ?? [{
+            id: "1",
+            data: JSON.stringify({ name: "Record 1" }),
+            sortDateValue: new Date()
+        }]; // insert getting data here instead of this dummy data
 
-        const response = { 
-            requestId: request.requestId, 
+        const response = {
+            requestId: request.requestId,
             records: this.records
         }
 
@@ -41,48 +45,48 @@ export class MyRecordSource implements IRecordSource {
         return {
             id: recordData.id,
             commands: [],
-            moduleName: MyRecordSource.name,
+            moduleName: this.getRecordSourceInfo().name,
             header: { components: this.createHeader(recordData.id, data) },
-            body: { components: this.createHeader(recordData.id, data) },
-            footer: { components: this.createHeader(recordData.id, data) },
-            accessibleName: "TranslationDatasource Record: " + recordData.id,
+            body: { components: this.createBody(recordData.id, data) },
+            footer: { components: this.createFooter(recordData.id, data) },
+            accessibleName: `${this.getRecordSourceInfo().name}: ${recordData.id}`,
             icon: this.createIcon(),
             sortDateValue: recordData.sortDateValue
         };
     }
 
-    createIcon(): IRecordIconData{
+    createIcon(): IRecordIconData {
         return {
-            type: 83, 
-            accessibleName: MyRecordSource.name + "_icon"
+            type: IconOption.TaskIcon, 
+            accessibleName: this.getRecordSourceInfo().name + "_icon"
         };
     }
 
     createHeader(recordId: string, data: IRecord) {
         return this.context.factory.createElement(
-            "Label", 
-            { key: `${MyRecordSource.name}_${recordId}_header` }, 
+            "Label",
+            { key: `${this.getRecordSourceInfo().name}_${recordId}_header` },
             `Header: ${data.name}`
         );
     }
 
     createBody(recordId: string, data: IRecord) {
         return this.context.factory.createElement(
-            "Label", 
-            { key: `${MyRecordSource.name}_${recordId}_body` }, 
+            "Label",
+            { key: `${this.getRecordSourceInfo().name}_${recordId}_body` },
             `Body: ${data.name}`
         );
     }
 
     createFooter(recordId: string, data: IRecord) {
         return this.context.factory.createElement(
-            "Label", 
-            { key: `${MyRecordSource.name}_${recordId}_footer` }, 
+            "Label",
+            { key: `${this.getRecordSourceInfo().name}_${recordId}_footer` },
             `Footer: ${data.name}`
         );
     }
 
-    getRecordCreate? () : IRecordCreate[] {
+    getRecordCreate?(): IRecordCreate[] {
         return [];
     }
 }

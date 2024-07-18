@@ -1,9 +1,9 @@
-export enum FilterGroupType {
+export const enum FilterGroupType {
     MultiSelect = "MultiSelect",
     SingleSelect = "SingleSelect"
 }
 
-export enum FilterGroupName {
+export const enum FilterGroupName {
     RecordType = "Module",
     ActivityType = "ActivityType",
     ActivityStatus = "ActivityStatus",
@@ -13,13 +13,13 @@ export enum FilterGroupName {
     ModifiedDate = "TLG"
 }
 
-export enum RecordTypeGroupOption {
+export const enum RecordTypeGroupOption {
     Notes = "Notes",
     Posts = "Posts",
     Activities = "Activities"
 }
 
-export enum ActivityTypeGroupOption {
+export const enum ActivityTypeGroupOption {
     Appointment = "4201",
     CampaignActivity = "4402",
     CaseResolution = "4206",
@@ -38,13 +38,13 @@ export enum ActivityTypeGroupOption {
     CustomerVoiceSurveyResponse = "10307"
 }
 
-export enum ActivityStatusGroupOption {
+export const enum ActivityStatusGroupOption {
     Active = "ActiveAndNotOverdueActivityState",
     Overdue = "Overdue",
     Closed = "Closed"
 }
 
-export enum ActivityDueGroupOption {
+export const enum ActivityDueGroupOption {
     Next30Days = "Next30Days",
     Next7Days = "Next7Days",
     Next24Hours = "Next24Hours",
@@ -53,18 +53,18 @@ export enum ActivityDueGroupOption {
     Last30Days = "Last30Days"
 }
 
-export enum PostSourceGroupOption {
+export const enum PostSourceGroupOption {
     AutoPost = "System",
     UserPost = "Users"
 }
 
-export enum ModifiedDateGroupOption {
+export const enum ModifiedDateGroupOption {
     Last24Hours = "Last24Hours",
     Last7Days = "Last7Days",
     Last30Days = "Last30Days"
 }
 
-export enum ActivityStatusReasonGroupOption {
+export const enum ActivityStatusReasonGroupOption {
     Free = "2198156",
     Tentative = "683145742",
     Completed = "601036331",
@@ -94,4 +94,100 @@ export enum ActivityStatusReasonGroupOption {
     NotStarted = "1725055988",
     WaitingOnSomeoneElse = "-1784277931",
     Deferred = "712535039"
+}
+
+export const enum IconOption {
+    PinIcon = 271,
+    UnPinIcon = 325,
+    NotesMicrosoftIcon = 206,
+    PostsMicrosoftIcon = 104,
+    UserPostsMicrosoftIcon = 42,
+    ActivitiesMicrosoftIcon = 103,
+    ServiceActivityIcon = 205,
+    CampaignResolutionIcon = 204,
+    CaseResolutionIcon = 203,
+    OpportunityIcon = 81,
+    AppointmentIcon = 82,
+    TeamsAppointmentIcon = 403,
+    RecurringAppointmentIcon = 122,
+    TaskIcon = 83,
+    TaskClipboardIcon = 466,
+    PhoneIcon = 66,
+    PhoneCallIncomingIcon = 85,
+    PhoneCallOutgoingIcon = 86,
+    LetterIcon = 411,
+    LetterIncomingIcon = 415,
+    LetterOutgoingIcon = 416,
+    FaxIcon = 412,
+    FaxIncomingIcon = 417,
+    FaxOutgoingIcon = 418,
+    EmailReceivedIcon = 87,
+    EmailSentIcon = 88,
+    EmailOtherIcon = 125,
+    EmailCancelledIcon = 65,
+    EmailFailedIcon = 300,
+    EmailIcon = 63,
+    PlusIcon = 198,
+    HorizontalMoreIcon = 12,
+    VerticalMoreIcon = 458,
+    ExcelIcon = 147,
+    PDFIcon = 192,
+    AccessIcon = 195,
+    OneNoteIcon = 194,
+    VisioIcon = 196,
+    DocumentIcon = 146,
+    PresentationIcon = 193,
+    ProjectIcon = 197,
+    DelveIcon = 150,
+    AudioIcon = 207,
+    CameraIcon = 208,
+    VideoIcon = 209,
+    ImageIcon = 210,
+    DefaultAttachmentIcon = 43,
+    EditIcon = 4,
+    updateIcon = 32,
+    DeleteIcon = 6,
+    AssignIcon = 79,
+    CloseIcon = 97,
+    DefaultActivityIcon = 151,
+    SearchButtonIcon = 61,
+    WarningIcon = 232,
+    AccountEntityIcon = 227,
+    IncidentEntityIcon = 84,
+    OpportunityEntityIcon = 347,
+    ContactEntityIcon = 168,
+    NotificationIcon = 184,
+    ChevronDownIcon = 200,
+    ChevronUpIcon = 199,
+    NewChevronExpandIcon = 468,
+    NewChevronCollapseIcon = 469,
+    ThumbsUpIcon = 431,
+    ThumbsDownIcon = 432,
+    HappySmileyIcon = 202,
+    SadSmileyIcon = 201,
+    ReplyEmailIcon = 94,
+    ReplyAllEmailIcon = 95,
+    ForwardEmailIcon = 96,
+    BotIcon = 327,
+    AddToQueueIcon = 136,
+    FilterSolidIcon = 326,
+    FilterIcon = 35,
+    CheckMarkIcon = 109,
+    OpenEntityRecordIcon = 257,
+    RefreshIcon = 32,
+    ResetIcon = 163,
+    UntrackedEmailIcon = 300,
+    CheckedMailIcon = 64,
+    OpenMailIcon = 301,
+    SharePointNewOneNoteDocumentIcon = 222,
+    InformationIcon = 179,
+    ExpandAllRecordsIcon = 468,
+    CollapseAllRecordsIcon = 469,
+    OpenChatCommandIcon = 459,
+    OpenMainCommandIcon = 72,
+    OpenMainActionIcon = 458,
+    CommandSmallScreen = 380,
+    CommandMediumScreen = 481,
+    CopyToClipboardIcon = 76,
+    ReassignRecordsIcon = 263,
 }

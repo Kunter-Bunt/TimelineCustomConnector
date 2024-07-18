@@ -4,7 +4,9 @@
   "description": "Sample Repository for Custom Connectors for the Dynamics Timeline",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "webpack --config webpack.dev.js",
+    "start": "webpack --config webpack.dev.js --watch",
+    "dist": "webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +21,12 @@
   },
   "homepage": "https://github.com/Kunter-Bunt/TimelineCustomConnector#readme",
   "devDependencies": {
+    "@types/xrm": "^9.0.80",
+    "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^6.0.1"
   }
 }
