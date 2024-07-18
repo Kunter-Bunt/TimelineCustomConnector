@@ -1,6 +1,7 @@
 import { IRecord } from "./types/Record";
-import { IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
+import { IControlData, IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordSourceParams, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
 import { IconOption } from "./types/Enums";
+
 
 export class MyRecordSource implements IRecordSource {
     private context: any;
@@ -10,7 +11,7 @@ export class MyRecordSource implements IRecordSource {
     constructor() {
     }
 
-    async init(context: any, config?: JSON | undefined): Promise<void> {
+    async init(context: IControlData<IRecordSourceParams>, config?: JSON | undefined): Promise<void> {
         this.context = context;
         this.config = config;
     };
