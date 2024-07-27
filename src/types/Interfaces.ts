@@ -225,8 +225,8 @@ export interface IFormatting {
 }
 
 export interface IFactory {
-    createElement: (e: string, t: IComponentContect, o: string) => IComponent;
-    createComponent: (e: string, t: IComponentContect, o: string) => IComponent;
+    createElement: (e: string, t: IComponentContect, o: string) => IComponent[];
+    createComponent: (e: string, t: IComponentContect, o: string) => IComponent[];
     bindDOMComponent: (e: string, t: any) => void;
     bindDOMElement: (e: string, t: any) => void;
     createFileObject: (e: string) => IComponent;

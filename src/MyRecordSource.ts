@@ -1,12 +1,13 @@
 import { IRecord } from "./types/Record";
 import { IControlData, IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordSourceParams, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
 import { IconOption } from "./types/Enums";
-
+import { ContactData } from "./ContactData";
 
 export class MyRecordSource implements IRecordSource {
-    private context: any;
-    private config: JSON | undefined;
+    private context?: IControlData<IRecordSourceParams>;
+    private config?: JSON;
     private records!: IRecordData[];
+    private contactData?: ContactData;
 
     constructor() {
     }
@@ -14,6 +15,7 @@ export class MyRecordSource implements IRecordSource {
     async init(context: IControlData<IRecordSourceParams>, config?: JSON | undefined): Promise<void> {
         this.context = context;
         this.config = config;
+        this.contactData = new ContactData(context);
     };
 
     getRecordSourceInfo(): IRecordSourceInfo {
@@ -23,11 +25,7 @@ export class MyRecordSource implements IRecordSource {
     };
 
     async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest | undefined): Promise<IRecordsDataResponse> {
-        this.records = this.records ?? [{
-            id: "1",
-            data: JSON.stringify({ name: "Record 1" }),
-            sortDateValue: new Date()
-        }]; // insert getting data here instead of this dummy data
+        this.records = this.records ?? await this.contactData?.getRecordsData(request);
 
         const response = {
             requestId: request.requestId,
@@ -58,33 +56,33 @@ export class MyRecordSource implements IRecordSource {
 
     createIcon(): IRecordIconData {
         return {
-            type: IconOption.TaskIcon, 
+            type: IconOption.ContactEntityIcon, 
             accessibleName: this.getRecordSourceInfo().name + "_icon"
         };
     }
 
     createHeader(recordId: string, data: IRecord) {
-        return this.context.factory.createElement(
+        return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_header` },
-            `Header: ${data.name}`
-        );
+            `${data.name}`
+        ) ?? [];
     }
 
     createBody(recordId: string, data: IRecord) {
-        return this.context.factory.createElement(
+        return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_body` },
-            `Body: ${data.name}`
-        );
+            `${data.email}`
+        ) ?? [];
     }
 
     createFooter(recordId: string, data: IRecord) {
-        return this.context.factory.createElement(
+        return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_footer` },
-            `Footer: ${data.name}`
-        );
+            `${data.date}`
+        ) ?? [];
     }
 
     getRecordCreate?(): IRecordCreate[] {
