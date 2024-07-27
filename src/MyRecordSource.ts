@@ -1,16 +1,16 @@
 import { IRecord } from "./types/Record";
-import { IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
+import { IControlData, IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordSourceParams, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
 import { IconOption } from "./types/Enums";
 
 export class MyRecordSource implements IRecordSource {
-    private context: any;
-    private config: JSON | undefined;
+    private context?: IControlData<IRecordSourceParams>;
+    private config?: JSON;
     private records!: IRecordData[];
 
     constructor() {
     }
 
-    async init(context: any, config?: JSON | undefined): Promise<void> {
+    async init(context: IControlData<IRecordSourceParams>, config?: JSON): Promise<void> {
         this.context = context;
         this.config = config;
     };
@@ -21,7 +21,7 @@ export class MyRecordSource implements IRecordSource {
         };
     };
 
-    async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest | undefined): Promise<IRecordsDataResponse> {
+    async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest): Promise<IRecordsDataResponse> {
         this.records = this.records ?? [{
             id: "1",
             data: JSON.stringify({ name: "Record 1" }),
@@ -63,27 +63,27 @@ export class MyRecordSource implements IRecordSource {
     }
 
     createHeader(recordId: string, data: IRecord) {
-        return this.context.factory.createElement(
+        return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_header` },
             `Header: ${data.name}`
-        );
+        ) ?? [];
     }
 
     createBody(recordId: string, data: IRecord) {
-        return this.context.factory.createElement(
+        return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_body` },
             `Body: ${data.name}`
-        );
+        ) ?? [];
     }
 
     createFooter(recordId: string, data: IRecord) {
-        return this.context.factory.createElement(
+        return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_footer` },
             `Footer: ${data.name}`
-        );
+        ) ?? [];
     }
 
     getRecordCreate?(): IRecordCreate[] {

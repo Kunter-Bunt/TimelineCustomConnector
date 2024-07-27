@@ -18,7 +18,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "MyRecordSource.js",
-    library: ["mwo"],
-    libraryTarget: "var",
+    libraryTarget: "window",
   },
 };
