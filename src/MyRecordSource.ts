@@ -2,12 +2,14 @@ import { IRecord } from "./types/Record";
 import { IControlData, IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordSourceParams, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
 import { IconOption } from "./types/Enums";
 import { ContactData } from "./ContactData";
+import { ContactFilter } from "./ContactFilter";
 
 export class MyRecordSource implements IRecordSource {
     private context?: IControlData<IRecordSourceParams>;
     private config?: JSON;
     private records!: IRecordData[];
     private contactData?: ContactData;
+    private contactFilter?: ContactFilter;
 
     constructor() {
     }
@@ -16,6 +18,7 @@ export class MyRecordSource implements IRecordSource {
         this.context = context;
         this.config = config;
         this.contactData = new ContactData(context);
+        this.contactFilter = new ContactFilter();
     };
 
     getRecordSourceInfo(): IRecordSourceInfo {
@@ -26,17 +29,18 @@ export class MyRecordSource implements IRecordSource {
 
     async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest | undefined): Promise<IRecordsDataResponse> {
         this.records = this.records ?? await this.contactData?.getRecordsData(request);
-
+        let filteredRecords = this.contactFilter?.getFilteredRecords(this.records.map(record => JSON.parse(record.data) as IRecord), filter) ?? []
+        
         const response = {
             requestId: request.requestId,
-            records: this.records
+            records: this.records.filter(record => filteredRecords.some(filteredRecord => filteredRecord.id === record.id)),
         }
 
         return response;
     }
 
     async getFilterDetails(filter?: IFilterRequest | undefined): Promise<IFilterGroup[]> {
-        return filter?.filterData ?? [];
+        return this.contactFilter?.getFilterDetails(this.records.map(record => JSON.parse(record.data) as IRecord), filter) ?? [];
     }
 
     getRecordUX(recordData: IRecordData, request: IRecordUXRequest): IRecordUX {

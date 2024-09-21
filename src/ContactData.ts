@@ -17,7 +17,7 @@ export class ContactData {
     private async getData(): Promise<IRecord[]> {
         let accountId = this.context.page.entityId;
         let filter = `$filter=_parentcustomerid_value eq ${accountId}`
-        let select = `$select=contactid,fullname,modifiedon,emailaddress1`
+        let select = `$select=contactid,fullname,modifiedon,emailaddress1,gendercode`;
         let contacts = await this.context.webAPI.retrieveMultipleRecords("contact", `?${filter}&${select}`);
         return contacts.entities.map(this.mapContact);
     }
@@ -27,6 +27,7 @@ export class ContactData {
             id: contact.contactid,
             name: contact.fullname,
             email: contact.emailaddress1,
+            gender: contact.gendercode,
             date: contact.modifiedon
         };
 

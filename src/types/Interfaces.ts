@@ -70,7 +70,7 @@ export interface IFilterGroup {
     options?: IFilterOption[];
 }
 
-interface IFilterOption {
+export interface IFilterOption {
     value: string | RecordTypeGroupOption | ActivityTypeGroupOption | ActivityStatusGroupOption | ActivityDueGroupOption | PostSourceGroupOption | ModifiedDateGroupOption | ActivityStatusReasonGroupOption;
     label?: string;
     count?: number;
