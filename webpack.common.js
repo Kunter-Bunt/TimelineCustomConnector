@@ -2,7 +2,10 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/MyRecordSource.ts",
+  entry: {
+    MyRecordSource: "./src/MyRecordSource.ts",
+    OrderRecordSource: "./src/OrderRecordSource.ts"
+  },
   module: {
     rules: [
       {
@@ -17,7 +20,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "MyRecordSource.js",
+    filename: "[name].js",
     libraryTarget: "window",
   },
 };
