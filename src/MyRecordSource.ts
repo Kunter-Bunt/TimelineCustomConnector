@@ -1,18 +1,21 @@
-import { IRecord } from "./types/Record";
 import { IControlData, IFilterGroup, IFilterRequest, IRecordCreate, IRecordData, IRecordIconData, IRecordSource, IRecordSourceInfo, IRecordSourceParams, IRecordUX, IRecordUXRequest, IRecordsDataRequest, IRecordsDataResponse } from "./types/Interfaces";
 import { IconOption } from "./types/Enums";
+import { Data } from "./Data";
+import { IConfiguration } from "./types/Configuration";
 
 export class MyRecordSource implements IRecordSource {
     private context?: IControlData<IRecordSourceParams>;
-    private config?: JSON;
+    private config!: IConfiguration;
     private records!: IRecordData[];
+    private data!: Data;
 
     constructor() {
     }
 
     async init(context: IControlData<IRecordSourceParams>, config?: JSON): Promise<void> {
         this.context = context;
-        this.config = config;
+        this.config = config as IConfiguration ?? {};
+        this.data = new Data(context, this.config);
     };
 
     getRecordSourceInfo(): IRecordSourceInfo {
@@ -22,11 +25,7 @@ export class MyRecordSource implements IRecordSource {
     };
 
     async getRecordsData(request: IRecordsDataRequest, filter?: IFilterRequest): Promise<IRecordsDataResponse> {
-        this.records = this.records ?? [{
-            id: "1",
-            data: JSON.stringify({ name: "Record 1" }),
-            sortDateValue: new Date()
-        }]; // insert getting data here instead of this dummy data
+        this.records = this.records ?? await this.data?.getRecordsData(request);
 
         const response = {
             requestId: request.requestId,
@@ -41,7 +40,7 @@ export class MyRecordSource implements IRecordSource {
     }
 
     getRecordUX(recordData: IRecordData, request: IRecordUXRequest): IRecordUX {
-        const data = JSON.parse(recordData.data) as IRecord;
+        const data = JSON.parse(recordData.data);
         return {
             id: recordData.id,
             commands: [],
@@ -62,27 +61,27 @@ export class MyRecordSource implements IRecordSource {
         };
     }
 
-    createHeader(recordId: string, data: IRecord) {
+    createHeader(recordId: string, data: any) {
         return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_header` },
-            `Header: ${data.name}`
+            `Header: ${data[this.config.headerField]}`
         ) ?? [];
     }
 
-    createBody(recordId: string, data: IRecord) {
+    createBody(recordId: string, data: any) {
         return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_body` },
-            `Body: ${data.name}`
+            `Body: ${data[this.config.bodyField]}`
         ) ?? [];
     }
 
-    createFooter(recordId: string, data: IRecord) {
+    createFooter(recordId: string, data: any) {
         return this.context?.factory.createElement(
             "Label",
             { key: `${this.getRecordSourceInfo().name}_${recordId}_footer` },
-            `Footer: ${data.name}`
+            `Footer: ${data[this.config.footerField]}`
         ) ?? [];
     }
 
