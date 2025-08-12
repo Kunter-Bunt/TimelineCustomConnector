@@ -1,8 +1,8 @@
 export interface IConfiguration extends JSON {
-    footerField: any;
-    bodyField: any;
-    headerField: any;
-    sortField: any;
+    footerField: string;
+    bodyField: string;
+    headerField: string;
+    sortField: string;
     entityName: string;
     selectFields: string;
     filterField: string;
