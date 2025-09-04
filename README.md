@@ -9,3 +9,6 @@ Sample Repository for Custom Connectors for the Dynamics Timeline. Notice that e
 
 Video Demo in a community call:  
 [![Timeline Custom Connector Video](https://img.youtube.com/vi/PksE1J1_sPQ/0.jpg)](https://youtu.be/PksE1J1_sPQ?t=15)
+
+## Community Contributions
+[OrdersSample](https://github.com/Kunter-Bunt/TimelineCustomConnector/tree/OrdersSample) by @hamzakindi has a sample for displaying Orders in the timeline.
